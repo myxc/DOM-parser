@@ -1,0 +1,25 @@
+Greedy regex aka any regex expression that does not have "?" in it:
+It will search for anythign that fits the regex pattern and then proceed to grab the entire rest of that line, so any specified delimiters that you want it to ignore, or stop at, will be ignored and all will be grabbed by the matcher.
+
+Non-greedy: Put a "?" in the pattern that you want to match and then it will match non-greedily which means that the regex operator will look ahead in the line after it finds a match and break what it is matching (If you specify a pattern that it should stop matching when it reaches, it actually will).
+
+I.e. The regex expression is meant to grab headers in HTML code. The first part <h[0-9]> will search for the pattern <h0> thru to <h9>, the stuff contained in the () are what will be captured from the match. 
+. means any character
+* means 0 or more times
+? specifies that the match is done non-greedily
+
+Regex: <h[0-9]>.*?</h[0-9]>
+Input: <h3>My Title</h3>
+<h[0-9]> matches: <h3>
+.*? matches: My Title
+</h[0-9]> matches: </h3>
+
+Excerpt from article on Regex: "Greedy trap": When searching greedily ends up matching more than what you expected to get. (captures more than what you're looking for).
+
+For the search {START}.*{END}
+A greedy operator such as .* will match anything and every that occurs 0 or more times after it finds your "START" token in the match, without stopping the capture after it reaches the "END" token, because it will simply capture everything occuring after the "START" token until the end of the string.
+
+In order to avoid this, we must use lazy quantifiers i.e. .*?
+However, lazy quantifiers are expensive in terms of processing time. They also need to be tweaked if you want your "START" or "END" token to be variable i.e. d+ etc, in which case you need to use another format for your regex expression.
+
+
